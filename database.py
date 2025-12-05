@@ -1,9 +1,7 @@
-import os
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "default_local_url")
+DATABASE_URL = "mysql+pymysql://root:@localhost:3306/electronic_calculator"
 
 engine = create_engine(DATABASE_URL, echo=True)
 
