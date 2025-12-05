@@ -1,4 +1,6 @@
+pymysql
+cryptography
+sqlalchemy
 fastapi
 uvicorn
-sqlalchemy
-pymysql
+python-multipart
