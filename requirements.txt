@@ -1,7 +1,4 @@
-uvicorn
 fastapi
+uvicorn
 sqlalchemy
-mysqlclient
-pydantic
-python-multipart
 pymysql
