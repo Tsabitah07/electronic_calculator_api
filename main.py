@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import engine, Base
+from database import engine, Base, SessionLocal
 from routes import electricity, electronicName, electronic, calculator
+from seed import seed_data
+from contextlib import asynccontextmanager
 
 Base.metadata.create_all(bind=engine)
 
@@ -12,7 +14,17 @@ openapi_tags = [
     {"name": "Calculator", "description": "Endpoints untuk kalkulasi biaya energi"}
 ]
 
-app = FastAPI(openapi_tags=openapi_tags)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create a DB session and seed data on startup
+    db = SessionLocal()
+    try:
+        seed_data(db)
+        yield
+    finally:
+        db.close()
+
+app = FastAPI(openapi_tags=openapi_tags, lifespan=lifespan)
 
 # 🔥 Tambahkan ini
 origins = [
